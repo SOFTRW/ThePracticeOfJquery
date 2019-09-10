@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .evenTr{
+            background-color: red;
+        }
+        .oddTr{
+            background-color: pink;
+        }
+        .activeTr{
+            background-color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+<table  id="tab" name="table" align="center" border="1" cellspacing="0" cellpadding="2" width="500px" style="text-align: center">
+    <tr>
+        <th>
+        <input type="checkbox" id="checkall" title="全选/全消">
+            <input type="button" value="反选" id="reverseBtn">
+        </th>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>年龄</th>
+    </tr>
+        <tr><td><input type="checkbox" class="item"></td>
+            <td>1</td>
+            <td></td>
+            <td></td>
+        </tr>
+    <tr><td><input type="checkbox" class="item"></td>
+            <td>2</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="item"></td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="item"></td>
+            <td>4</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="item"></td>
+            <td>5</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="item"></td>
+            <td>6</td>
+            <td></td>
+            <td></td>
+        </tr>
+</table>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script>
+    // $("tr:gt(0):odd").css("background","red");
+    // $("tr:gt(0):even").css("background","pink");
+    $("#checkall").click(function () {
+        var chk= $("#checkall").prop("checked");
+        $(".item").prop("checked",chk);
+        //$(".item").prop("checked",this.checked);
+    });
+    $("#reverseBtn").click(function () {
+        // var chk=$(".item").prop("checked");
+        // $(".item").prop("checked",!chk);
+        $(".item").click();
+    });
+    $(".item").click(function () {
+        var v=$(".item:checked").length===$(".item").length;
+        $("#checkall").prop("checked",v);
+    });
+    $("tr:gt(0):odd").addClass("oddTr");
+    $("tr:gt(0):even").addClass("evenTr");
+    /*$("tr:gt(0)").mouseover(function () {
+        $(this).addClass("activeTr");
+    }).mouseout(function () {
+        $(this).removeClass("activeTr");
+    });*/
+    $("tr:gt(0)").hover(function () {
+        $(this).toggleClass("activeTr");
+    });
+</script>
+</body>
+</html>

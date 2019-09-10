@@ -1,0 +1,228 @@
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>我的jquery表单校验页面</title>
+
+    <style type="text/css">
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px 14px;
+            border: 1px solid #999;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+<h1>员工信息录入</h1>
+<form name="empForm" id="empForm" method="get" action="#">
+    <table>
+        <tr>
+            <td>真实姓名(不能为空 ,没有其他要求)</td>
+            <td><input type="text" id="realname" name="realname" />
+            </td>
+        </tr>
+        <tr>
+            <td>登录名(登录名不能为空,长度应该在5-8之间:</td>
+            <td><input type="text" id="username" name="username" /></td>
+        </tr>
+        <tr>
+            <td>密码(不能为空,长度6-12之间):</td>
+            <td><input type="password" id="pwd" name="pwd" /></td>
+        </tr>
+        <tr>
+            <td>重复密码密码(不能为空,长度6-12之间):</td>
+            <td><input type="password" id="pwd2" name="pwd2" /></td>
+        </tr>
+        <tr>
+            <td>性别(必选其一)</td>
+            <td>
+                <input type="radio" id="male" value="m" name="sex" />男
+                <input type="radio" id="female" value="f" name="sex" />女
+
+                <label class="error" for="sex"></label>
+            </td>
+        </tr>
+        <tr>
+            <td>年龄(必填26-50):</td>
+            <td><input type="text" id="age" name="age" /></td>
+        </tr>
+        <tr>
+            <td>你的学历:</td>
+            <td>
+                <select name="edu" id="edu">
+                    <option value="">－请选择你的学历－</option>
+                    <option value="a">专科</option>
+                    <option value="b">本科</option>
+                    <option value="c">研究生</option>
+                    <option value="e">硕士</option>
+                    <option value="d">博士</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>兴趣爱好:</td>
+            <td colspan="2">
+                <input type="checkbox" name="hobby" id="pp" value="0" />乒乓球
+                <input type="checkbox" name="hobby" id="ym" value="1" />羽毛球
+                <input type="checkbox" name="hobby" id="sw" value="2" />上网
+                <input type="checkbox" name="hobby" id="ly" value="3" />旅游
+                <input type="checkbox" name="hobby" id="gw" value="4" />购物
+                <label class="error" for="hobby"></label>
+            </td>
+        </tr>
+        <tr>
+            <td align="left">电子邮箱:</td>
+            <td><input type="text" id="email" name="email" /></td>
+        </tr>
+        <tr>
+            <td align="left">身份证(15-18):</td>
+            <td><input type="text" id="idcard" name="idcard" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" id="smtBtn" value="保存"></td>
+        </tr>
+    </table>
+</form>
+
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/jquery.validate.min.js"></script>
+<script>
+    $("#empForm").validate({
+        rules:{//配置校验的规则
+            realname:{
+                required:true
+            },
+            username:{
+                required:true,
+                rangelength:[5, 8]
+            },
+            pwd:{
+                required:true,
+                rangelength:[6, 12]
+            },
+            pwd2:{
+                required:true,
+                rangelength:[6, 12],
+                equalTo:"#pwd"
+            },
+            sex:{
+                required:true
+            },
+            age:{
+                required:true,
+                range:[26, 50],
+                digits:true
+            },
+            edu:{
+                required:true
+            },
+            hobby:{
+                required:true
+            },
+            email:{
+                required:true,
+                email:true
+            },
+            idcard:{
+                required:true,
+                card:true
+            }
+        },
+        messages:{//配置提示信息（校验不通过的时候显示的）
+            realname:{
+                required:"请输入真实姓名"
+            },
+            username:{
+                required:"请输入登录名",
+                rangelength:"长度必须是5~8位"
+            },
+            pwd:{
+                required:"请输入密码",
+                rangelength:"长度必须是6~12位"
+            },
+            pwd2:{
+                required:"请输入重复密码",
+                rangelength:"长度必须是6~12位",
+                equalTo:"两次密码输入不一致"
+            },
+            sex:{
+                required:"请选择性别"
+            },
+            age:{
+                required:"请输入年龄",
+                range:"必须是26~50之间的数字",
+                digits:"必须是整数"
+            },
+            edu:{
+                required:"请选择学历"
+            },
+            hobby:{
+                required:"请选择爱好"
+            },
+            email:{
+                required:"请输入邮箱地址",
+                email:"邮箱格式不正确"
+            },
+            idcard:{
+                required:"请输入身份证号",
+                card:"身份证号错了"
+            }
+        },
+        submitHandler:function(form){
+            alert("表单校验通过了" + form.id);
+            //form：是被校验的表单对象
+            //可以在这里写Ajax代码，使用Ajax提交，代替表单本身的提交
+        }
+    });
+
+    /**
+     * 参数1：规则名称
+     * 参数2：校验方法（匿名函数，回调函数，给插件去调用的方法），方法有三个形参
+     * 		value：是用户输入的值，要校验的就是value的值
+     * 		element：是用户输入的那个标签对象
+     * 		params：用户输入的那个标签，配置此规则的参数值
+     * 参数3：默认提示信息
+     */
+    $.validator.addMethod("card",function(value, element, params){
+        //在这个方法里编写校验的逻辑代码
+        //身份证号：15位数字，18位数字， 17位数字+X
+        //   前15位：一定是数字
+        //	 继续2位：一定是数字
+        //	 最后1位：数字，或者X
+
+        //  数字：15次   (数字：2次， 数字或者X：1次)出现0次或1次
+        //var reg = /^\d{15}(\d{2}[\dX])?$/i;
+        var reg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+        var r = reg.test(value);
+
+
+        //如果校验通过，标签对象背景颜色设置为浅绿色；否则设置为粉色
+        if (r) {
+            $(element).css("background-color", "lightgreen");
+        }else{
+            $(element).css("background-color", "pink");
+        }
+
+        //返回boolean类型。如果校验通过，返回true；否则返回false
+        return r;
+    },"身份证号格式错误");
+</script>
+</body>
+
+</html>

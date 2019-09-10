@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        table{
+            width: 300px;
+            margin: 0 auto;
+        }
+        select{
+            width: 100px;
+            height: 120px;
+        }
+        td{
+            text-align: center;
+        }
+        input[type="button"]{
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <td>可选项</td>
+        <td></td>
+        <td>已选项</td>
+    </tr>
+    <tr>
+        <td>
+            <select id="left" multiple="multiple">
+                <option>选项0</option>
+                <option>选项1</option>
+                <option>选项2</option>
+                <option>选项3</option>
+                <option>选项4</option>
+                <option>选项5</option>
+                <option>选项6</option>
+                <option>选项7</option>
+            </select>
+        </td>
+        <td>
+            <input type="button" value=">" id="toRight"/><br />
+            <input type="button" value=">>>" id="allToRight"/><br />
+            <input type="button" value="<" id="toLeft"/><br />
+            <input type="button" value="<<<" id="allToLeft"/><br />
+        </td>
+        <td>
+            <select id="right" multiple="multiple">
+                <option>选项8</option>
+                <option>选项9</option>
+            </select>
+        </td>
+    </tr>
+</table>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script>
+    $("#toRight").click(function () {
+        $("#left>option:selected").appendTo("#right");
+    });
+    $("#allToRight").click(function () {
+        $("#left>option:selected").appendTo("#right");
+    });
+    $("#toLeft").click(function () {
+        $("#right>option:selected").appendTo("#left");
+    });
+    $("#allToLeft").click(function () {
+        $("#right>option:selected").appendTo("#left");
+    });
+</script>
+</body>
+</html>
